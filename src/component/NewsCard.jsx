@@ -1,7 +1,7 @@
 import { AiFillStar } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const NewsCard = ({ news }) => {
-    console.log(news)
 
     return (
         <div className=" bg-base-100 w-96 border mb-5 mx-auto shadow-xl">
@@ -17,7 +17,10 @@ const NewsCard = ({ news }) => {
                 <div className="px-4">
                     <h2 className="font-bold mb-2">{news.title}</h2>
                     <img className="rounded-lg" src={news.image_url} alt="" />
-                    <p className="text-[10px]">{news.details}</p>
+                    <p className="text-[10px]">
+                        {news.details.slice(0, 150)}...{''}
+                        <Link to={`/news/${news._id}`} className="text-primary">Read More</Link>
+                    </p>
                 </div>
                 <hr />
 
@@ -30,7 +33,7 @@ const NewsCard = ({ news }) => {
                         <p>{news.rating.number}</p>
                     </div>
                     <div className="flex justify-center items-center space-x-2">
-                    <FaEye />
+                        <FaEye />
                         <p>{news.total_view}</p>
                     </div>
                 </div>

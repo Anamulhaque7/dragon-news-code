@@ -2,6 +2,10 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import Home from "../Layout/Home";
 import CategoryNews from "../pages/CategoryNews";
 import AuthLayout from "../Layout/AuthLayout";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import NewsDeatils from "../pages/NewsDeatils";
+import PrivateRoute from "./PrivateRoute";
 
 const Routers = createBrowserRouter([
     {
@@ -15,25 +19,30 @@ const Routers = createBrowserRouter([
             {
                 path: "/category/:id",
                 element: <CategoryNews></CategoryNews>,
-                loader: ({params}) => fetch(`https://openapi.programming-hero.com/api/news/category/${params.id}`)
+                loader: ({ params }) => fetch(`https://openapi.programming-hero.com/api/news/category/${params.id}`)
             }
         ]
     },
     {
-        path: 'news',
-        element: <h1>News Layout</h1>
+        path: '/news/:id',
+        element: (
+            <PrivateRoute>
+                <NewsDeatils></NewsDeatils>
+            </PrivateRoute>
+        ),
+        loader: ({ params }) => fetch(`https://openapi.programming-hero.com/api/news/${params.id}`)
     },
     {
         path: 'auth',
         element: <AuthLayout></AuthLayout>,
-        children:[
+        children: [
             {
-                path:'/auth/login',
-                element:<h2>Login </h2>
+                path: '/auth/login',
+                element: <Login></Login>
             },
             {
-                path:'/authy/register',
-                element:<h2>Regidter</h2>
+                path: '/auth/register',
+                element: <Register></Register>,
             }
         ]
     },
